@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="lotterytype">
+        <item>双色球</item>
+        <item>3D</item>
+    </array>
+</resources>
