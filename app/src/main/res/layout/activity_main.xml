@@ -14,13 +14,14 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></FrameLayout>
-        
+
         <ListView
             android:id="@+id/listview_menu"
-            android:layout_width="240dp"
+            android:layout_width="@dimen/listview_lottery_menu_width"
             android:layout_height="match_parent"
-            android:background="#da2b2b"
             android:layout_gravity="left"
-            android:choiceMode="singleChoice"></ListView>
+            android:background="@color/color_lottery_listview_bg"
+            android:choiceMode="singleChoice" />
+
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

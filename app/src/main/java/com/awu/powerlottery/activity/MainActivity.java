@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
     private void initMenuList(){
         menuListView = (ListView)findViewById(R.id.listview_menu);
         String[] data = getResources().getStringArray(R.array.lotterytype);
-        listAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,data);
+        listAdapter = new ArrayAdapter<String>(this,R.layout.lottery_menu_item,R.id.textview_menuname,data);
         menuListView.setAdapter(listAdapter);
 
     }
