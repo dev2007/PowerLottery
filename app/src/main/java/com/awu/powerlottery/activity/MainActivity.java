@@ -1,7 +1,9 @@
 package com.awu.powerlottery.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -15,10 +17,11 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.awu.powerlottery.R;
+import com.awu.powerlottery.app.ActivityCollector;
 import com.awu.powerlottery.util.LotteryType;
 import com.awu.powerlottery.util.WebUtility;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
     private DisplayFragment displayFragment;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -26,7 +29,7 @@ public class MainActivity extends Activity {
     private ArrayAdapter<String> listAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
@@ -36,7 +39,7 @@ public class MainActivity extends Activity {
     private void initView(){
         displayFragment = new DisplayFragment();
         drawerLayout = (DrawerLayout)findViewById(R.id.layout_drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.drawable.blue_ball,R.string.app_name,R.string.hello_world){
+        mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.mipmap.ic_launcher,R.string.drawer_in,R.string.drawer_out){
             public void onDrawerClosed(View view){
 
             }
@@ -76,10 +79,33 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_exit) {
+            exitAlert();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * alert dialog for click exit menu item.
+     */
+    private void exitAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("确认要退出？")
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCollector.finishAll();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        builder.show();
     }
 }
