@@ -15,18 +15,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.util.Log;
 
 import com.awu.powerlottery.R;
 import com.awu.powerlottery.app.ActivityCollector;
+import com.awu.powerlottery.util.DataUtil;
 import com.awu.powerlottery.util.LotteryType;
 import com.awu.powerlottery.util.WebUtility;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MainActivity extends BaseActivity {
+    private static final String TAG = "MainActivity";
+
     private DisplayFragment displayFragment;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView menuListView;
-    private ArrayAdapter<String> listAdapter;
+    private SimpleAdapter listMenuAdapter;
+    private List<Map<String,Object>> menuData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,17 +49,19 @@ public class MainActivity extends BaseActivity {
     private void initView(){
         displayFragment = new DisplayFragment();
         drawerLayout = (DrawerLayout)findViewById(R.id.layout_drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.mipmap.ic_launcher,R.string.drawer_in,R.string.drawer_out){
+        mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.mipmap.ic_list_white,R.string.drawer_in,R.string.drawer_out){
             public void onDrawerClosed(View view){
-
+                getActionBar().setIcon(R.mipmap.ic_menu_white);
             }
 
             public void onDrawerOpened(View drawerView){
-
+                getActionBar().setIcon(R.mipmap.ic_arrow_back_white);
             }
         };
 
         drawerLayout.setDrawerListener(mDrawerToggle);
+        getActionBar().setHomeButtonEnabled(true);
+//        getActionBar().setIcon(R.mipmap.ic_menu_white);
 
         FragmentTransaction transaction =  getFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, displayFragment);
@@ -58,11 +70,12 @@ public class MainActivity extends BaseActivity {
 
     private void initMenuList(){
         menuListView = (ListView)findViewById(R.id.listview_menu);
-        String[] data = getResources().getStringArray(R.array.lotterytype);
-        listAdapter = new ArrayAdapter<String>(this,R.layout.lottery_menu_item,R.id.textview_menuname,data);
-        menuListView.setAdapter(listAdapter);
-
+        menuData = DataUtil.getMenuData();
+        listMenuAdapter = new SimpleAdapter(this,menuData,R.layout.lottery_menu_item,new String[]{"img","title"},
+                new int[]{R.id.imgview_menuimg,R.id.textview_menuname});
+        menuListView.setAdapter(listMenuAdapter);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,11 +90,24 @@ public class MainActivity extends BaseActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_exit) {
-            exitAlert();
-            return true;
+        switch (id){
+            case R.id.action_exit:
+                exitAlert();
+                return true;
+            case R.id.action_about:
+                break;
+            case android.R.id.home:
+                if(!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    Log.i(TAG, "onOptionsItemSelected home drawer open");
+                    drawerLayout.openDrawer(Gravity.LEFT);
+                }
+                else {
+                    Log.i(TAG, "onOptionsItemSelected home drawer close.");
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                }
+                return true;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);

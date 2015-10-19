@@ -4,4 +4,10 @@
     <string name="action_about">关于</string>
     <string name="drawer_in">打开抽屉</string>
     <string name="drawer_out">关闭抽屉</string>
+    <string name="lottery_name_ssq">双色球</string>
+    <string name="lottery_name_3d">福彩3D</string>
+    <string name="lottery_name_qlc">七乐彩</string>
+    <string name="lottery_name_dlt">大乐透</string>
+    <string name="lottery_name_pl">排列3排列5</string>
+    <string name="lottery_name_qxc">七星彩</string>
 </resources>
