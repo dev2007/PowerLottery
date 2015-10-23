@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import android.util.Log;
 
@@ -45,6 +46,26 @@ public class Utility {
     public static final String KEY_PRIZE = "prize";
 
     /**
+     * the list LotteryType with phase date key name.
+     */
+    private static final Map<LotteryType,String> LotteryPhaseDateList = new HashMap<LotteryType,String>();
+
+    /**
+     * the list LotteryType with phase key name.
+     */
+    private static final Map<LotteryType,String> LotteryPhaseList = new HashMap<LotteryType,String>();
+
+
+    static {
+        LotteryPhaseDateList.put(LotteryType.SHUANGSEQIU,"SSQ_DATE");
+        LotteryPhaseDateList.put(LotteryType.FUCAI3D,"FC_DATE");
+
+        LotteryPhaseList.put(LotteryType.SHUANGSEQIU,"SSQ_PHASE");
+        LotteryPhaseList.put(LotteryType.FUCAI3D,"FC_PHASE");
+    }
+
+
+    /**
      * Store the newest phase and date.
      * @param lotteryType
      * @param newData
@@ -56,6 +77,9 @@ public class Utility {
         PreferencesUtil.setData(KEY_NEW_PHASE,phase);
         PreferencesUtil.setData(KEY_NEW_DATE,date);
         PreferencesUtil.setData(KEY_PHASE,phase - 1);
+
+        setPhase(lotteryType,phase - 1);
+        setPhaseDate(lotteryType,date);
     }
 
     private static Map<String, Object> SSQ_PrizeData = new HashMap<String, Object>();
@@ -135,5 +159,41 @@ public class Utility {
             Log.i(TAG, "compareDate ex:"+e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * set phase.
+     * @param lotteryType
+     * @param phase
+     */
+    public static void setPhase(LotteryType lotteryType,int phase){
+        PreferencesUtil.setData(LotteryPhaseList.get(lotteryType),phase);
+    }
+
+    /**
+     * get phase.
+     * @param lotteryType
+     * @return
+     */
+    public static int getPhase(LotteryType lotteryType){
+        return (int)PreferencesUtil.getData(LotteryPhaseList.get(lotteryType),0);
+    }
+
+    /**
+     * set phase date.
+     * @param lotteryType
+     * @param date
+     */
+    public static void setPhaseDate(LotteryType lotteryType,String date){
+        PreferencesUtil.setData(LotteryPhaseDateList.get(lotteryType),date);
+    }
+
+    /**
+     * get phase date.
+     * @param lotteryType
+     * @return
+     */
+    public static String getPhaseDate(LotteryType lotteryType){
+        return (String) PreferencesUtil.getData(LotteryPhaseDateList.get(lotteryType), "2014-07-07 00:01");
     }
 }

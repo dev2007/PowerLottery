@@ -7,10 +7,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awu.powerlottery.R;
+import com.awu.powerlottery.adapter.PrizeGridArrayAdapter;
 import com.awu.powerlottery.bl.IQueryDataListener;
 import com.awu.powerlottery.bl.IQueryLatestListener;
 import com.awu.powerlottery.handler.QueryDataHandler;
@@ -26,20 +33,39 @@ import java.text.SimpleDateFormat;
 /**
  * Created by awu on 2015-10-23.
  */
-public class BaseFragment extends Fragment implements IQueryLatestListener,IQueryDataListener {
+public abstract class BaseFragment extends Fragment implements IQueryLatestListener, IQueryDataListener {
     private static final String TAG = "BaseFragment";
     private ProgressDialog progressDialog = null;
     protected View contentView;
     private int mLayoutId;
+    protected LotteryType lotteryType;
     protected QueryDataHandler queryDataHandler = new QueryDataHandler(this);
     protected QueryLatestHandler queryLatestHandler = new QueryLatestHandler(this);
 
-    public BaseFragment(){
+
+    protected Spinner periodSpinner;
+    protected ArrayAdapter spinnerAdapter;
+    protected static String[] m_arr = new String[30];
+
+    protected TextView textViewLotterydate;
+
+    protected LinearLayout linearLayoutPhase;
+    protected LinearLayout linearLayoutPhaseDate;
+    protected LinearLayout linearLayoutBall;
+
+    protected GridView gridViewPrize;
+    protected static String[] gridArr;
+    private PrizeGridArrayAdapter gridArrayAdapter;
+
+    protected Button buttonRandom;
+
+    public BaseFragment() {
         super();
     }
 
-    protected void setLayout(int resouceId){
+    protected void setLayout(int resouceId,LotteryType lotteryType) {
         this.mLayoutId = resouceId;
+        this.lotteryType = lotteryType;
     }
 
     @Override
@@ -51,23 +77,46 @@ public class BaseFragment extends Fragment implements IQueryLatestListener,IQuer
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        onInitView();
         onInit(savedInstanceState);
         requestPhase();
     }
 
     /**
+     * initialize common views.
+     */
+    private void onInitView() {
+        textViewLotterydate = (TextView)contentView.findViewById(R.id.tv_lotterydate);
+        periodSpinner = (Spinner) contentView.findViewById(R.id.spinner_period);
+        linearLayoutPhase = (LinearLayout) contentView.findViewById(R.id.line_phase);
+        linearLayoutPhaseDate = (LinearLayout) contentView.findViewById(R.id.line_phasedate);
+        linearLayoutBall = (LinearLayout) contentView.findViewById(R.id.line_ball);
+        gridViewPrize = (GridView) contentView.findViewById(R.id.gv_prize);
+        buttonRandom = (Button) contentView.findViewById(R.id.btn_random);
+    }
+
+    /**
      * subclass for initialize views.
+     *
      * @param savedInstanceState
      */
-    protected void onInit(Bundle savedInstanceState){
+    protected abstract void onInit(Bundle savedInstanceState);
 
-    }
 
     /**
      * subclass request phase data.
      */
     protected void requestPhase(){
-
+        setPhaseVisible(false);
+        String date = Utility.getPhaseDate(lotteryType);
+        //newest has not result
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        if (Utility.compareCurrentDateTime(date)) {
+            queryLatestHandler.sendEmptyMessage(QueryLatestHandler.MSG_OK);
+        } else {
+            showProgressDialog(true);
+            WebUtility.queryNewLottery(LotteryType.SHUANGSEQIU, queryLatestHandler);
+        }
     }
 
     protected void showProgressDialog(boolean show) {
@@ -91,29 +140,64 @@ public class BaseFragment extends Fragment implements IQueryLatestListener,IQuer
     /**
      * subclass set spinner after get phase data.
      */
-    protected  void setSpinner(){
+    protected void requestPhaseOK(){
+        setPhaseVisible(true);
+        organizePhaseData();
+        spinnerAdapter = new ArrayAdapter(contentView.getContext(), android.R.layout.simple_list_item_1, m_arr);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        periodSpinner.setAdapter(spinnerAdapter);
+        periodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                requestOthers(position);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
+
+    /**
+     * sub class organize phase data.
+     */
+    protected  abstract void organizePhaseData();
 
 
     /**
-     * subclass request prize data.
+     * request prize data.
      */
-    protected  void requestOthers(){
-
+    private void requestOthers(int position){
+        setOthersVisible(false);
+        showProgressDialog(true);
+        WebUtility.queryLottery(LotteryType.SHUANGSEQIU, m_arr[position], queryDataHandler);
     }
+
 
     /**
      * subclass set other views after get prize data.
      */
-    protected  void setOthers(){
-
+    protected   void requestOthersOK(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setOthersVisible(true);
+                organizeOthersData();
+                gridArrayAdapter = new PrizeGridArrayAdapter(contentView.getContext(), R.layout.layout_prize_cell, gridArr);
+                gridViewPrize.setAdapter(gridArrayAdapter);
+            }
+        });
     }
+
+    /***
+     * sub class organize others data.
+     */
+    protected abstract void organizeOthersData();
 
     @Override
     public void getDataOK() {
         showProgressDialog(false);
-        setOthers();
+        requestOthersOK();
     }
 
     @Override
@@ -123,12 +207,43 @@ public class BaseFragment extends Fragment implements IQueryLatestListener,IQuer
 
     @Override
     public void getLatestOK() {
-        setSpinner();
+        requestPhaseOK();
     }
 
     @Override
     public void getLatestFail() {
         showProgressDialog(false);
         Toast.makeText(contentView.getContext(), "加载数据失败", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * set phase view visible.
+     *
+     * @param visible
+     */
+    protected void setPhaseVisible(boolean visible) {
+        if (linearLayoutPhase != null) {
+            linearLayoutPhase.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
+        if (linearLayoutPhaseDate != null) {
+            linearLayoutPhaseDate.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
+    }
+
+    /**
+     * set others view visible.
+     *
+     * @param visible
+     */
+    protected void setOthersVisible(boolean visible) {
+        if (linearLayoutBall != null) {
+            linearLayoutBall.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
+        if (gridViewPrize != null) {
+            gridViewPrize.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
+        if (buttonRandom != null) {
+            buttonRandom.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }

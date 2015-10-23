@@ -48,11 +48,11 @@ public class MainActivity extends BaseActivity {
         drawerLayout = (DrawerLayout)findViewById(R.id.layout_drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.mipmap.ic_list_white,R.string.drawer_in,R.string.drawer_out){
             public void onDrawerClosed(View view){
-                getActionBar().setIcon(R.mipmap.ic_menu_white);
+                getActionBar().setLogo(R.mipmap.ic_menu_white);
             }
 
             public void onDrawerOpened(View drawerView){
-                getActionBar().setIcon(R.mipmap.ic_arrow_back_white);
+                getActionBar().setLogo(R.mipmap.ic_arrow_back_white);
             }
         };
 

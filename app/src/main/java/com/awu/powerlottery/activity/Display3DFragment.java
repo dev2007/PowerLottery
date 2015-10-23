@@ -8,24 +8,38 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.awu.powerlottery.R;
+import com.awu.powerlottery.util.LotteryType;
 
 /**
  * Created by awu on 2015-10-20.
  */
-public class Display3DFragment extends Fragment {
+public class Display3DFragment extends BaseFragment {
 
-    @Override
-    public void onAttach(Context context){
-        super.onAttach(context);
+    public Display3DFragment(){
+        super();
+        setLayout(R.layout.layout_lottery_3d, LotteryType.FUCAI3D);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
-        return inflater.inflate(R.layout.layout_lottery_3d,container,false);
+    protected void onInit(Bundle savedInstanceState) {
+
+    }
+
+
+    @Override
+    protected void organizePhaseData() {
+
+    }
+
+
+    @Override
+    protected void requestOthersOK() {
+        super.requestOthersOK();
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+    protected void organizeOthersData() {
+
     }
+
 }
