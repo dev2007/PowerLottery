@@ -1,7 +1,7 @@
 package com.awu.powerlottery.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,27 +11,22 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.util.Log;
 
 import com.awu.powerlottery.R;
 import com.awu.powerlottery.app.ActivityCollector;
 import com.awu.powerlottery.util.DataUtil;
-import com.awu.powerlottery.util.LotteryType;
-import com.awu.powerlottery.util.WebUtility;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
 
-    private DisplayFragment displayFragment;
+    private DisplaySSQFragment displaySSQFragment;
+    private Display3DFragment display3DFragment;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView menuListView;
@@ -47,7 +42,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView(){
-        displayFragment = new DisplayFragment();
+        displaySSQFragment = new DisplaySSQFragment();
+        display3DFragment = new Display3DFragment();
+
         drawerLayout = (DrawerLayout)findViewById(R.id.layout_drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.mipmap.ic_list_white,R.string.drawer_in,R.string.drawer_out){
             public void onDrawerClosed(View view){
@@ -61,10 +58,9 @@ public class MainActivity extends BaseActivity {
 
         drawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setHomeButtonEnabled(true);
-//        getActionBar().setIcon(R.mipmap.ic_menu_white);
 
         FragmentTransaction transaction =  getFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, displayFragment);
+        transaction.add(R.id.fragment_container, displaySSQFragment);
         transaction.commit();
     }
 
@@ -74,6 +70,35 @@ public class MainActivity extends BaseActivity {
         listMenuAdapter = new SimpleAdapter(this,menuData,R.layout.lottery_menu_item,new String[]{"img","title"},
                 new int[]{R.id.imgview_menuimg,R.id.textview_menuname});
         menuListView.setAdapter(listMenuAdapter);
+        menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Map<String, Object> rowData = menuData.get(position);
+                switch ((int) rowData.get("id")) {
+                    case R.string.lottery_name_ssq:
+                        ft.replace(R.id.fragment_container, displaySSQFragment);
+                        break;
+                    case R.string.lottery_name_3d:
+                        ft.replace(R.id.fragment_container,display3DFragment);
+                        break;
+                    case R.string.lottery_name_qlc:
+                        break;
+                    case R.string.lottery_name_dlt:
+                        break;
+                    case R.string.lottery_name_pl:
+                        break;
+                    case R.string.lottery_name_qxc:
+                        break;
+                    default:
+                        break;
+                }
+                ft.commit();
+
+                drawerLayout.closeDrawer(Gravity.LEFT);
+            }
+        });
     }
 
 
@@ -98,11 +123,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case android.R.id.home:
                 if(!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                    Log.i(TAG, "onOptionsItemSelected home drawer open");
                     drawerLayout.openDrawer(Gravity.LEFT);
                 }
                 else {
-                    Log.i(TAG, "onOptionsItemSelected home drawer close.");
                     drawerLayout.closeDrawer(Gravity.LEFT);
                 }
                 return true;

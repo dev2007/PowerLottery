@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="240dp"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/imgview_menuimg"
+        android:src="@mipmap/ssq"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"/>
 
     <TextView
         android:id="@+id/textview_menuname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:textAlignment="center"
         android:text="test"
         android:textColor="@color/lottery_listview_text"
         android:textSize="24sp" />

@@ -22,31 +22,37 @@ public class DataUtil {
         HashMap<String,Object> map = new HashMap<String, Object>();
         map.put("img", R.mipmap.ssq);
         map.put("title", getResourceStr(R.string.lottery_name_ssq));
+        map.put("id",R.string.lottery_name_ssq);
         menuData.add(map);
 
         map = new HashMap<String,Object>();
         map.put("img",R.mipmap.fc3d);
         map.put("title", getResourceStr(R.string.lottery_name_3d));
+        map.put("id",R.string.lottery_name_3d);
         menuData.add(map);
 
         map = new HashMap<String,Object>();
         map.put("img",R.mipmap.qlc);
         map.put("title", getResourceStr(R.string.lottery_name_qlc));
+        map.put("id",R.string.lottery_name_qlc);
         menuData.add(map);
 
         map = new HashMap<String,Object>();
         map.put("img",R.mipmap.dlt);
         map.put("title", getResourceStr(R.string.lottery_name_dlt));
+        map.put("id",R.string.lottery_name_dlt);
         menuData.add(map);
 
         map = new HashMap<String,Object>();
         map.put("img",R.mipmap.pl);
         map.put("title", getResourceStr(R.string.lottery_name_pl));
+        map.put("id",R.string.lottery_name_pl);
         menuData.add(map);
 
         map = new HashMap<String,Object>();
         map.put("img",R.mipmap.qxc);
         map.put("title", getResourceStr(R.string.lottery_name_qxc));
+        map.put("id",R.string.lottery_name_qxc);
         menuData.add(map);
 
         return  menuData;

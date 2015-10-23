@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="lottery_listview_text">#da2b2b</color>
+    <color name="lottery_type_text">#da2b2b</color>
+    <color name="lottery_type_desc">#808080</color>
 </resources>
