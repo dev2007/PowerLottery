@@ -4,6 +4,7 @@ import android.test.AndroidTestCase;
 
 import com.awu.powerlottery.entity.LotteryResult;
 import com.awu.powerlottery.util.HttpUtil;
+import com.awu.powerlottery.util.LotteryType;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class HttpUtilTest extends AndroidTestCase {
         HttpUtil.sendHttpRequest(url, new HttpUtil.HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
-                Map<String,Object> result = LotteryResult.parseShuangseqiu(response);
+                Map<String,Object> result = LotteryResult.parseDetail(response, LotteryType.SHUANGSEQIU);
                 assertEquals("05,07,11,16,22,25,07",result.get("result"));
                 assertEquals("2015-10-18 21:15:00", result.get("enddate"));
                 ArrayList<Map<String,Object>> prizeList = (ArrayList<Map<String,Object>>)result.get("prize");

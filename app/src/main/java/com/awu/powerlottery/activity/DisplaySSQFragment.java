@@ -28,6 +28,7 @@ import com.awu.powerlottery.util.LotteryType;
 import com.awu.powerlottery.util.PreferencesUtil;
 import com.awu.powerlottery.util.Utility;
 import com.awu.powerlottery.util.WebUtility;
+import com.awu.powerlottery.view.ImageText;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,7 +42,7 @@ public class DisplaySSQFragment extends BaseFragment {
 
 
 
-    private Button[] ballList = new Button[7];
+    private ImageText[] ballList = new ImageText[7];
 
     private  int currentPosition;
 
@@ -52,27 +53,18 @@ public class DisplaySSQFragment extends BaseFragment {
 
     @Override
     protected void onInit(Bundle savedInstanceState){
-        ballList[0] = (Button)contentView.findViewById(R.id.iv_b1);
-        ballList[1] = (Button)contentView.findViewById(R.id.iv_b2);
-        ballList[2] = (Button)contentView.findViewById(R.id.iv_b3);
-        ballList[3] = (Button)contentView.findViewById(R.id.iv_b4);
-        ballList[4] = (Button)contentView.findViewById(R.id.iv_b5);
-        ballList[5] = (Button)contentView.findViewById(R.id.iv_b6);
-        ballList[6] = (Button)contentView.findViewById(R.id.iv_b7);
+        ballList[0] = (ImageText)contentView.findViewById(R.id.iv_b1);
+        ballList[1] = (ImageText)contentView.findViewById(R.id.iv_b2);
+        ballList[2] = (ImageText)contentView.findViewById(R.id.iv_b3);
+        ballList[3] = (ImageText)contentView.findViewById(R.id.iv_b4);
+        ballList[4] = (ImageText)contentView.findViewById(R.id.iv_b5);
+        ballList[5] = (ImageText)contentView.findViewById(R.id.iv_b6);
+        ballList[6] = (ImageText)contentView.findViewById(R.id.iv_b7);
     }
 
 
 
-    @Override
-    protected void organizePhaseData() {
-        int phase = Utility.getPhase(lotteryType);
-        if (phase != 0) {
-            for (int i = 0; i < m_arr.length; i++) {
-                m_arr[i] = "" + phase;
-                phase--;
-            }
-        }
-    }
+
 
     @Override
     protected void requestOthersOK(){
@@ -81,8 +73,8 @@ public class DisplaySSQFragment extends BaseFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                textViewLotterydate.setText(Utility.getSSQPrizeDate());
-                String[] prizeResult = Utility.getSSQResult();
+                textViewLotterydate.setText(Utility.pullPhaseDate(lotteryType));
+                String[] prizeResult = Utility.pullPrizeResult(lotteryType);
                 if (prizeResult.length == 7)
                     for (int i = 0; i < prizeResult.length; i++) {
                         ballList[i].setText("" + prizeResult[i]);
@@ -91,14 +83,6 @@ public class DisplaySSQFragment extends BaseFragment {
         });
     }
 
-    @Override
-    protected void organizeOthersData(){
-        String[] prize = Utility.getSSQPrize();
-        gridArr = new String[prize.length];
-        for (int i = 0;i < gridArr.length;i++){
-            gridArr[i] = prize[i];
-        }
-    }
 
 
 

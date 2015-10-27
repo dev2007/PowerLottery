@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.awu.powerlottery.entity.LotteryResult;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -46,7 +47,7 @@ public class WebUtility {
             @Override
             public void onFinish(String response) {
                 Log.i(TAG, "onFinish query:" + response);
-                Utility.storePhaseData(lotteryType,LotteryResult.parseShuangseqiu(response));
+                Utility.pushPhaseData(lotteryType,LotteryResult.parseDetail(response,lotteryType));
                 if(msgHandler != null) {
                     Message msg = new Message();
                     msg.what = MSG_OK;

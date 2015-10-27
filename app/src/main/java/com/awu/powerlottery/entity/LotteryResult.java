@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.awu.powerlottery.util.LotteryType;
 import com.awu.powerlottery.util.Utility;
 
 import java.util.ArrayList;
@@ -24,20 +25,31 @@ public class LotteryResult {
      * @param response The server response result json string.
      * @return Result string,such like "16,21,24,26,27,29,16"
      */
-    public static Map<String, Object> parseShuangseqiu(String response) {
+    public static Map<String, Object> parseDetail(String response,LotteryType lotteryType) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             JSONObject jsonobject = new JSONObject(response);
             JSONObject data = jsonobject.getJSONObject("data");
-            map.put("result",prizeResult(data));
-            map.put("enddate",prizeEndDate(data));
-            map.put("prize",prizeList(data));
+
+            String result = "";
+            switch (lotteryType){
+                case SHUANGSEQIU:
+                    result = prizeResult(data);
+                    break;
+                case FUCAI3D:
+                    result = prize3DResult(data);
+                    break;
+            }
+            map.put(Utility.KEY_RESULT,result);
+            map.put(Utility.KEY_ENDDATE,prizeEndDate(data));
+            map.put(Utility.KEY_PRIZE,prizeList(data));
 
         } catch (Exception e) {
             map = new HashMap<String, Object>();
         }
         return map;
     }
+
 
     private static String prizeResult(JSONObject data) {
         String resultStr = "";
@@ -72,6 +84,33 @@ public class LotteryResult {
             return resultStr;
         } catch (Exception e) {
             Log.i(TAG, "parseShuangseqiu exception:" + e.getMessage());
+            return "";
+        }
+    }
+
+    private static String prize3DResult(JSONObject data) {
+        String resultStr = "";
+        try {
+            JSONObject result = data.getJSONObject("result");
+            JSONArray result2 = result.getJSONArray("result");
+            JSONObject obj = (JSONObject) result2.get(0);
+            String key = obj.getString("key");
+            JSONArray ballData = null;
+            if (key.equals("ball"))
+                ballData = obj.getJSONArray("data");
+
+            if(ballData != null)
+            for (int i = 0; i < ballData.length(); i++) {
+                String num = (String) ballData.get(i);
+                resultStr += num + ",";
+            }
+
+            resultStr = resultStr.substring(0,resultStr.length() - 1);
+
+            Log.i(TAG, "parse3d result:" + resultStr);
+            return resultStr;
+        } catch (Exception e) {
+            Log.i(TAG, "parse3d exception:" + e.getMessage());
             return "";
         }
     }

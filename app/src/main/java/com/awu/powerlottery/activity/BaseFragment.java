@@ -115,7 +115,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
             queryLatestHandler.sendEmptyMessage(QueryLatestHandler.MSG_OK);
         } else {
             showProgressDialog(true);
-            WebUtility.queryNewLottery(LotteryType.SHUANGSEQIU, queryLatestHandler);
+            WebUtility.queryNewLottery(lotteryType, queryLatestHandler);
         }
     }
 
@@ -142,6 +142,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
      */
     protected void requestPhaseOK(){
         setPhaseVisible(true);
+        m_arr = new String[30];
         organizePhaseData();
         spinnerAdapter = new ArrayAdapter(contentView.getContext(), android.R.layout.simple_list_item_1, m_arr);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -159,9 +160,18 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
     }
 
     /**
-     * sub class organize phase data.
+     * organize phase data.
      */
-    protected  abstract void organizePhaseData();
+    private void organizePhaseData() {
+        int phase = Utility.getPhase(lotteryType);
+        if (phase != 0) {
+            for (int i = 0; i < m_arr.length; i++) {
+                m_arr[i] = "" + phase;
+                phase--;
+            }
+        }
+    }
+
 
 
     /**
@@ -170,7 +180,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
     private void requestOthers(int position){
         setOthersVisible(false);
         showProgressDialog(true);
-        WebUtility.queryLottery(LotteryType.SHUANGSEQIU, m_arr[position], queryDataHandler);
+        WebUtility.queryLottery(lotteryType, m_arr[position], queryDataHandler);
     }
 
 
@@ -190,9 +200,15 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
     }
 
     /***
-     * sub class organize others data.
+     * organize others data.
      */
-    protected abstract void organizeOthersData();
+    private void organizeOthersData(){
+        String[] prize = Utility.pullPrize(lotteryType);
+        gridArr = new String[prize.length];
+        for (int i = 0;i < gridArr.length;i++){
+            gridArr[i] = prize[i];
+        }
+    }
 
     @Override
     public void getDataOK() {

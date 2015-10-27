@@ -58,10 +58,10 @@ public class Utility {
 
     static {
         LotteryPhaseDateList.put(LotteryType.SHUANGSEQIU,"SSQ_DATE");
-        LotteryPhaseDateList.put(LotteryType.FUCAI3D,"FC_DATE");
+        LotteryPhaseDateList.put(LotteryType.FUCAI3D,"FC3D_DATE");
 
         LotteryPhaseList.put(LotteryType.SHUANGSEQIU,"SSQ_PHASE");
-        LotteryPhaseList.put(LotteryType.FUCAI3D,"FC_PHASE");
+        LotteryPhaseList.put(LotteryType.FUCAI3D,"FC3D_PHASE");
     }
 
 
@@ -74,51 +74,100 @@ public class Utility {
         int phase = Integer.parseInt((String)newData.get(KEY_NEW_PHASE));
         String date = (String)newData.get(KEY_NEW_DATE);
 
-        PreferencesUtil.setData(KEY_NEW_PHASE,phase);
-        PreferencesUtil.setData(KEY_NEW_DATE,date);
-        PreferencesUtil.setData(KEY_PHASE,phase - 1);
-
         setPhase(lotteryType,phase - 1);
         setPhaseDate(lotteryType,date);
     }
 
     private static Map<String, Object> SSQ_PrizeData = new HashMap<String, Object>();
+    private static Map<String, Object> FC3D_PrizeData = new HashMap<String, Object>();
 
-    public static void storePhaseData(LotteryType lotteryType,Map<String, Object> data){
-        SSQ_PrizeData = data;
+    /***
+     * store prize data.
+     * @param lotteryType
+     * @param data
+     */
+    public static void pushPhaseData(LotteryType lotteryType,Map<String, Object> data){
+        switch (lotteryType){
+            case SHUANGSEQIU:
+                SSQ_PrizeData = data;
+                break;
+            case FUCAI3D:
+                FC3D_PrizeData = data;
+                break;
+            default:
+                break;
+        }
     }
 
-    /**
-     * get SSQ latest phase date.
+    private static Map<String, Object> switchPrizeData(LotteryType lotteryType){
+        Map<String, Object> data = new HashMap<String,Object>();
+        switch (lotteryType){
+            case SHUANGSEQIU:
+                data = SSQ_PrizeData;
+                break;
+            case FUCAI3D:
+                data = FC3D_PrizeData;
+                break;
+            default:
+                break;
+        }
+        return data;
+    }
+
+    /***
+     * get phase date.
+     * @param lotteryType
      * @return
      */
-    public static String getSSQPrizeDate(){
-        if(SSQ_PrizeData.containsKey(KEY_ENDDATE)) {
-            String endDate = (String) SSQ_PrizeData.get(KEY_ENDDATE);
-            return endDate;
+    public static String pullPhaseDate(LotteryType lotteryType){
+        Map<String,Object> data = switchPrizeData(lotteryType);
+
+        if(data.containsKey(KEY_ENDDATE)) {
+            return (String) data.get(KEY_ENDDATE);
         }else{
             return "";
         }
     }
 
-    /***
-     * get SSQ latest result.
+    /**
+     * get prize result.
+     * @param lotteryType
      * @return
      */
-    public static String[] getSSQResult(){
-        if(SSQ_PrizeData.containsKey(KEY_RESULT)){
-            String result = (String)SSQ_PrizeData.get(KEY_RESULT);
+    public static String[] pullPrizeResult(LotteryType lotteryType){
+        Map<String,Object> data = switchPrizeData(lotteryType);
+
+        if(data.containsKey(KEY_RESULT)){
+            String result = (String)data.get(KEY_RESULT);
             return result.split(",");
         }else{
             return new String[0];
         }
     }
 
+
+    /**
+     * get prize detail.
+     * @param lotteryType
+     * @return
+     */
+    public static String[] pullPrize(LotteryType lotteryType){
+        switch (lotteryType){
+            case SHUANGSEQIU:
+                return getSSQPrize();
+            case FUCAI3D:
+                return get3DPrize();
+            default:
+                break;
+        }
+        return new String[0];
+    }
+
     /**
      * get ssq prize list.
      * @return
      */
-    public static String[] getSSQPrize(){
+    private static String[] getSSQPrize(){
         String[] prize = new String[28];
         ArrayList<Map<String,String>> prizeList = (ArrayList<Map<String,String>>)SSQ_PrizeData.get(KEY_PRIZE);
         int index = 4;
@@ -133,6 +182,25 @@ public class Utility {
             prize[index+2] = map.get("prize");
             prize[index+3] = prizeCondition[index/4-1];
             index += 4;
+        }
+        return  prize;
+    }
+
+    private static String[] get3DPrize(){
+        String[] prize = new String[12];
+        ArrayList<Map<String,String>> prizeList = (ArrayList<Map<String,String>>)FC3D_PrizeData.get(KEY_PRIZE);
+        int index = 3;
+        prize[0] = "奖项";
+//        prize[1] = "中奖条件";
+        prize[1] = "中奖注数";
+        prize[2] = "单注奖金";
+        String[] prizeDesc = {"选号与奖号按顺序全部相同","选号与奖号一致(顺序不限)，且任意两位相同","选号与奖号一致(顺序不限)，且3位数各不相同"};
+        for (Map<String,String> map : prizeList){
+            prize[index] = map.get("name");
+//            prize[index+1] = prizeDesc[index/4-1];
+            prize[index+1] = map.get("bet");
+            prize[index+2] = map.get("prize");
+            index += 3;
         }
         return  prize;
     }

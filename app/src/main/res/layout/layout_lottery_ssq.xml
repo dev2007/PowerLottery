@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_border"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,65 +76,59 @@
 
     <LinearLayout
         android:id="@+id/line_ball"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
         android:visibility="invisible">
 
-        <Button
+        <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/red_ball"
+            custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
-        <Button
+        <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b2"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/red_ball"
+            custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
-        <Button
+        <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b3"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/red_ball"
+            custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
-        <Button
+        <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b4"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/red_ball"
+            custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
-        <Button
+        <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b5"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/red_ball"
+            custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
-        <Button
+        <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b6"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/red_ball"
+            custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
-        <Button
+        <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b7"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/blue_ball"
+            custom:Src="@mipmap/blue_ball"
             android:textColor="#fff" />
     </LinearLayout>
 
