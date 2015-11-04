@@ -4,8 +4,8 @@ package com.awu.powerlottery.util;
  * Created by awu on 2015-10-15.
  */
 public enum LotteryType {
-    SHUANGSEQIU("双色球",50),
-    FUCAI3D("福彩3D",52);
+    SHUANGSEQIU("ssq",50),
+    FUCAI3D("fc3d",52);
 
     private String name;
     private int value;

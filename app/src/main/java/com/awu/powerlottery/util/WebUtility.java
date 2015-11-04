@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.awu.powerlottery.bl.DataLayer;
 import com.awu.powerlottery.entity.LotteryResult;
 
 import java.util.HashMap;
@@ -40,14 +41,14 @@ public class WebUtility {
         return String.format("%s%s%s=%s",LOTTERY_HOST,LOTTERY_NEW,LOTTERY_PARAM_TYPE,lotteryType.getValue());
     }
 
-    public static void queryLottery(final LotteryType lotteryType,String phase, final Handler msgHandler){
+    public static void queryLottery(final LotteryType lotteryType,final String phase, final Handler msgHandler){
         String url = queryLotteryResultAddress(lotteryType, phase);
         Log.i(TAG, "queryLottery url:"+url);
         HttpUtil.sendHttpRequest(url, new HttpUtil.HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
                 Log.i(TAG, "onFinish query:" + response);
-                Utility.pushPhaseData(lotteryType,LotteryResult.parseDetail(response,lotteryType));
+                LotteryResult.parseDetail(phase,response,lotteryType);
                 if(msgHandler != null) {
                     Message msg = new Message();
                     msg.what = MSG_OK;
@@ -80,7 +81,7 @@ public class WebUtility {
             public void onFinish(String response) {
                 Log.i(TAG, "onFinish newlottery.");
                 Map<String,Object> result = LotteryResult.parseNewPhase(response);
-                Utility.storeNewPhase(lotteryType,result);
+                DataLayer.storeNewPhase(lotteryType, result);
                 if(msgHandler != null){
                     Message msg = new Message();
                     msg.what = MSG_OK;

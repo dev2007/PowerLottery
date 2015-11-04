@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.awu.powerlottery.R;
 import com.awu.powerlottery.adapter.PrizeGridArrayAdapter;
+import com.awu.powerlottery.bl.DataLayer;
 import com.awu.powerlottery.bl.IQueryDataListener;
 import com.awu.powerlottery.bl.IQueryLatestListener;
 import com.awu.powerlottery.handler.QueryDataHandler;
@@ -69,12 +70,12 @@ public class DisplaySSQFragment extends BaseFragment {
     @Override
     protected void requestOthersOK(){
         super.requestOthersOK();
-
+        Log.i(TAG,"ssq requestothers ok");
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                textViewLotterydate.setText(Utility.pullPhaseDate(lotteryType));
-                String[] prizeResult = Utility.pullPrizeResult(lotteryType);
+                textViewLotterydate.setText(DataLayer.pullPhaseDate(lotteryType));
+                String[] prizeResult = DataLayer.pullPrizeResult(lotteryType);
                 if (prizeResult.length == 7)
                     for (int i = 0; i < prizeResult.length; i++) {
                         ballList[i].setText("" + prizeResult[i]);

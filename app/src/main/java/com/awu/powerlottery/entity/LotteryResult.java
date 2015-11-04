@@ -6,11 +6,15 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.awu.powerlottery.app.PowerLotteryApplication;
+import com.awu.powerlottery.bl.DataLayer;
+import com.awu.powerlottery.db.DBUtil;
 import com.awu.powerlottery.util.LotteryType;
 import com.awu.powerlottery.util.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,6 +52,43 @@ public class LotteryResult {
             map = new HashMap<String, Object>();
         }
         return map;
+    }
+
+    public static void parseDetail(String phase,String response,LotteryType lotteryType){
+        List<PrizeResult> list = new ArrayList<>();
+        try {
+            JSONObject jsonobject = new JSONObject(response);
+            JSONObject data = jsonobject.getJSONObject("data");
+
+            String result = "";
+            switch (lotteryType){
+                case SHUANGSEQIU:
+                    result = prizeResult(data);
+                    break;
+                case FUCAI3D:
+                    result = prize3DResult(data);
+                    break;
+            }
+
+            String date = prizeEndDate(data);
+
+            Log.i(TAG,"request phase date:"+date);
+
+            for (Map<String,String> row : prizeList(data)){
+                PrizeResult prizeResult = new PrizeResult();
+                prizeResult.setPhase(Integer.parseInt(phase));
+                prizeResult.setResult(result);
+                prizeResult.setType(lotteryType.getName());
+                prizeResult.setTotal(Integer.parseInt(row.get("bet")));
+                prizeResult.setPrizemoney(Integer.parseInt(row.get("prize")));
+                prizeResult.setDate(date);
+                list.add(prizeResult);
+            }
+            DataLayer.appendLotteryResult(lotteryType,phase,list);
+            DBUtil.instance(PowerLotteryApplication.appContext()).savePrize(lotteryType,list);
+
+        } catch (Exception e) {
+        }
     }
 
 

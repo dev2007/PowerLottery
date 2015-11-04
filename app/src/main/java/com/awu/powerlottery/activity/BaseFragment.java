@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.awu.powerlottery.R;
 import com.awu.powerlottery.adapter.PrizeGridArrayAdapter;
+import com.awu.powerlottery.app.CommonDialog;
+import com.awu.powerlottery.bl.DataLayer;
 import com.awu.powerlottery.bl.IQueryDataListener;
 import com.awu.powerlottery.bl.IQueryLatestListener;
 import com.awu.powerlottery.handler.QueryDataHandler;
@@ -35,7 +37,7 @@ import java.text.SimpleDateFormat;
  */
 public abstract class BaseFragment extends Fragment implements IQueryLatestListener, IQueryDataListener {
     private static final String TAG = "BaseFragment";
-    private ProgressDialog progressDialog = null;
+    protected CommonDialog dialogHelper;
     protected View contentView;
     private int mLayoutId;
     protected LotteryType lotteryType;
@@ -57,6 +59,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
     protected static String[] gridArr;
     private PrizeGridArrayAdapter gridArrayAdapter;
 
+
     protected Button buttonRandom;
 
     public BaseFragment() {
@@ -77,6 +80,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        dialogHelper = new CommonDialog(contentView.getContext());
         onInitView();
         onInit(savedInstanceState);
         requestPhase();
@@ -84,6 +88,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
 
     /**
      * initialize common views.
+     * 初始化控件
      */
     private void onInitView() {
         textViewLotterydate = (TextView)contentView.findViewById(R.id.tv_lotterydate);
@@ -97,6 +102,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
 
     /**
      * subclass for initialize views.
+     * 虚方法，子类需实现的 其他初始化
      *
      * @param savedInstanceState
      */
@@ -104,41 +110,20 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
 
 
     /**
-     * subclass request phase data.
+     * request phase data.
+     * 请求期数数据。
      */
     protected void requestPhase(){
         setPhaseVisible(false);
-        String date = Utility.getPhaseDate(lotteryType);
-        //newest has not result
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        if (Utility.compareCurrentDateTime(date)) {
-            queryLatestHandler.sendEmptyMessage(QueryLatestHandler.MSG_OK);
-        } else {
-            showProgressDialog(true);
-            WebUtility.queryNewLottery(lotteryType, queryLatestHandler);
-        }
+        DataLayer.getNewLottery(lotteryType,queryLatestHandler,this);
     }
 
-    protected void showProgressDialog(boolean show) {
-        if (show) {
-            if (progressDialog != null) {
-                if (!progressDialog.isShowing())
-                    progressDialog.show();
-            } else {
-                progressDialog = new ProgressDialog(contentView.getContext());
-                progressDialog.setMessage(getResources().getString(R.string.msg_query));
-                progressDialog.show();
-            }
-        } else {
-            if (progressDialog != null) {
-                if (progressDialog.isShowing())
-                    progressDialog.dismiss();
-            }
-        }
-    }
+
 
     /**
-     * subclass set spinner after get phase data.
+     * set spinner after get phase data.
+     * 期数请求成功后的处理。主要是绑定期数选择器。
+     * 子类如果需要其他设置，可重写。
      */
     protected void requestPhaseOK(){
         setPhaseVisible(true);
@@ -161,9 +146,10 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
 
     /**
      * organize phase data.
+     * 组织期数数据用于期数选择器。
      */
     private void organizePhaseData() {
-        int phase = Utility.getPhase(lotteryType);
+        int phase = DataLayer.getPhase(lotteryType);
         if (phase != 0) {
             for (int i = 0; i < m_arr.length; i++) {
                 m_arr[i] = "" + phase;
@@ -176,16 +162,18 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
 
     /**
      * request prize data.
+     * 请求某期的获奖信息。
      */
     private void requestOthers(int position){
         setOthersVisible(false);
         showProgressDialog(true);
-        WebUtility.queryLottery(lotteryType, m_arr[position], queryDataHandler);
+        DataLayer.getLotteryResult(lotteryType, m_arr[position], queryDataHandler,this);
     }
 
 
     /**
-     * subclass set other views after get prize data.
+     * set other views after get prize data.
+     * 获取获取信息后的控件处理。
      */
     protected   void requestOthersOK(){
         getActivity().runOnUiThread(new Runnable() {
@@ -193,39 +181,70 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
             public void run() {
                 setOthersVisible(true);
                 organizeOthersData();
-                gridArrayAdapter = new PrizeGridArrayAdapter(contentView.getContext(), R.layout.layout_prize_cell, gridArr);
+                gridArrayAdapter = new PrizeGridArrayAdapter(contentView.getContext(), R.layout.layout_prize_cell, gridArr, redLocation());
                 gridViewPrize.setAdapter(gridArrayAdapter);
             }
         });
     }
 
+    /**
+     * set prize list somewhere text is red.
+     * 设置获取列表中某些位置的文字是红色。
+     * @return
+     */
+    private int[] redLocation(){
+        switch (lotteryType){
+            case SHUANGSEQIU:
+                return new int[]{6,10};
+            default:
+                return  new int[]{};
+        }
+    }
+
     /***
      * organize others data.
+     * 组织其他数据。主要为获取列表数据
      */
     private void organizeOthersData(){
-        String[] prize = Utility.pullPrize(lotteryType);
+        String[] prize = DataLayer.pullPrize(lotteryType);
         gridArr = new String[prize.length];
         for (int i = 0;i < gridArr.length;i++){
             gridArr[i] = prize[i];
         }
     }
 
+    /**
+     * get prize data ok callback.
+     * 获取获奖数据成功后回调函数。
+     */
     @Override
     public void getDataOK() {
         showProgressDialog(false);
         requestOthersOK();
     }
 
+    /**
+     * get prize data fail callback.
+     * 获取获奖数据失败后回调函数。
+     */
     @Override
     public void getDataFail() {
         showProgressDialog(false);
     }
 
+    /**
+     * get phase data ok callback.
+     * 获取期数成功回调函数。
+     */
     @Override
     public void getLatestOK() {
         requestPhaseOK();
     }
 
+    /**
+     * get phase fail callback.
+     * 获取期数失败回调函数。
+     */
     @Override
     public void getLatestFail() {
         showProgressDialog(false);
@@ -234,7 +253,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
 
     /**
      * set phase view visible.
-     *
+     * 设置期数控件可见性。
      * @param visible
      */
     protected void setPhaseVisible(boolean visible) {
@@ -248,7 +267,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
 
     /**
      * set others view visible.
-     *
+     * 设置其他控件可见性。
      * @param visible
      */
     protected void setOthersVisible(boolean visible) {
@@ -261,5 +280,14 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
         if (buttonRandom != null) {
             buttonRandom.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         }
+    }
+
+    /**
+     * set progress dialog visible.
+     * 设置进度框可见性。
+     * @param show
+     */
+    public void showProgressDialog(boolean show){
+        dialogHelper.showProgressDialog(show);
     }
 }

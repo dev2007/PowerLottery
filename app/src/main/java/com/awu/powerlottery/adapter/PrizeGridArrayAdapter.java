@@ -17,12 +17,14 @@ public class PrizeGridArrayAdapter extends ArrayAdapter {
     private int mResource;
     private LayoutInflater inflater;
     private String[] dataArray;
+    private int[] redLocation;
 
-    public PrizeGridArrayAdapter(Context context, int resource, String[] objects) {
+    public PrizeGridArrayAdapter(Context context, int resource, String[] objects,int[] redLocation) {
         super(context, resource, objects);
         this.mResource = resource;
         inflater = LayoutInflater.from(context);
         this.dataArray = objects;
+        this.redLocation = redLocation;
     }
 
     @Override
@@ -34,8 +36,13 @@ public class PrizeGridArrayAdapter extends ArrayAdapter {
         TextView tv = ((TextView) convertView);
         tv.setText(dataArray[position]);
 
-        if (position == 6 || position == 10)
-            tv.setTextColor(Color.rgb(255, 0, 0));
+        if(redLocation.length > 0){
+            for (int i = 0;i < redLocation.length;i++){
+                int pos = redLocation[i];
+                if (position == pos)
+                    tv.setTextColor(Color.rgb(255, 0, 0));
+            }
+        }
         return convertView;
     }
 }

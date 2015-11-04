@@ -10,4 +10,10 @@
         <item name="android:background">#d93333</item>
     </style>
 
+    <style name="btn">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:text">@string/txt_prize</item>
+        <item name="android:background">@drawable/btn_selector</item>
+    </style>
 </resources>

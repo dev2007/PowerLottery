@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.awu.powerlottery.R;
+import com.awu.powerlottery.bl.DataLayer;
 import com.awu.powerlottery.util.LotteryType;
 import com.awu.powerlottery.util.Utility;
 import com.awu.powerlottery.view.ImageText;
@@ -40,8 +41,8 @@ public class Display3DFragment extends BaseFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                textViewLotterydate.setText(Utility.pullPhaseDate(lotteryType));
-                String[] prizeResult = Utility.pullPrizeResult(lotteryType);
+                textViewLotterydate.setText(DataLayer.pullPhaseDate(lotteryType));
+                String[] prizeResult = DataLayer.pullPrizeResult(lotteryType);
                 if(prizeResult.length == ballButtonArray.length){
                     for (int i = 0;i < prizeResult.length;i++){
                         ballButtonArray[i].setText(prizeResult[i]);
