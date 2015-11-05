@@ -14,6 +14,7 @@ public class DbHelper extends SQLiteOpenHelper {
             "phase integer," +
             "result text," +
             "total integer," +
+            "date text," +
             "prizemoney integer)";
 
     public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

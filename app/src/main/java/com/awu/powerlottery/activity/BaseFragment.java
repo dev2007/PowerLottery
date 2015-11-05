@@ -167,6 +167,7 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
     private void requestOthers(int position){
         setOthersVisible(false);
         showProgressDialog(true);
+        Log.i(TAG,"Request data of phase:"+m_arr[position]);
         DataLayer.getLotteryResult(lotteryType, m_arr[position], queryDataHandler,this);
     }
 

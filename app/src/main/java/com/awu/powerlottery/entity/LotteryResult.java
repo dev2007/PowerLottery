@@ -23,36 +23,6 @@ import java.util.Map;
 public class LotteryResult {
     private static final String TAG = "LotteryResult";
 
-    /**
-     * Parse shuangseqiu result.
-     *
-     * @param response The server response result json string.
-     * @return Result string,such like "16,21,24,26,27,29,16"
-     */
-    public static Map<String, Object> parseDetail(String response,LotteryType lotteryType) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        try {
-            JSONObject jsonobject = new JSONObject(response);
-            JSONObject data = jsonobject.getJSONObject("data");
-
-            String result = "";
-            switch (lotteryType){
-                case SHUANGSEQIU:
-                    result = prizeResult(data);
-                    break;
-                case FUCAI3D:
-                    result = prize3DResult(data);
-                    break;
-            }
-            map.put(Utility.KEY_RESULT,result);
-            map.put(Utility.KEY_ENDDATE,prizeEndDate(data));
-            map.put(Utility.KEY_PRIZE,prizeList(data));
-
-        } catch (Exception e) {
-            map = new HashMap<String, Object>();
-        }
-        return map;
-    }
 
     public static void parseDetail(String phase,String response,LotteryType lotteryType){
         List<PrizeResult> list = new ArrayList<>();
@@ -202,8 +172,8 @@ public class LotteryResult {
             String date = data.getString("time_draw");
             Log.i(TAG, "parseNewPhase phase:" + phase);
             Log.i(TAG, "parseNewPhase data:" + date);
-            map.put(Utility.KEY_NEW_PHASE,phase);
-            map.put(Utility.KEY_NEW_DATE,date);
+            map.put(DataLayer.KEY_NEW_PHASE,phase);
+            map.put(DataLayer.KEY_NEW_DATE,date);
         }catch (Exception e){
             return new HashMap<String, Object>();
         }

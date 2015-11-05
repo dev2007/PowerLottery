@@ -47,7 +47,7 @@ public class WebUtility {
         HttpUtil.sendHttpRequest(url, new HttpUtil.HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
-                Log.i(TAG, "onFinish query:" + response);
+                Log.d(TAG, "Prize data onFinish query:" + response);
                 LotteryResult.parseDetail(phase,response,lotteryType);
                 if(msgHandler != null) {
                     Message msg = new Message();

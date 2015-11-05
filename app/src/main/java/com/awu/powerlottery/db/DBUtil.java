@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.awu.powerlottery.entity.PrizeResult;
 import com.awu.powerlottery.util.LotteryType;
@@ -15,6 +16,7 @@ import java.util.List;
  * Created by awu on 2015-11-03.
  */
 public class DBUtil {
+    private static final String TAG = "DBUTIL";
     private static final String DB_NAME = "power_lottery";
 
     public static final int VERSION = 1;
@@ -48,6 +50,7 @@ public class DBUtil {
             values.put("result",result.getResult());
             values.put("total",result.getTotal());
             values.put("prizemoney",result.getPrizemoney());
+            values.put("date",result.getDate());
             db.insert("Detail",null,values);
         }
     }
@@ -58,11 +61,13 @@ public class DBUtil {
         if(cursor.moveToFirst()){
             do{
                 PrizeResult result = new PrizeResult();
+                Log.i(TAG,"Database Get:"+Integer.parseInt(phase));
                 result.setPhase(Integer.parseInt(phase));
                 result.setPrizemoney(cursor.getInt(cursor.getColumnIndex("prizemoney")));
                 result.setResult(cursor.getString(cursor.getColumnIndex("result")));
                 result.setTotal(cursor.getInt(cursor.getColumnIndex("total")));
                 result.setType(cursor.getString(cursor.getColumnIndex("type")));
+                result.setDate(cursor.getString(cursor.getColumnIndex("date")));
                 list.add(result);
             }while (cursor.moveToNext());
 
