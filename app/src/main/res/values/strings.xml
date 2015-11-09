@@ -11,6 +11,7 @@
     <string name="lottery_name_pl">排列3排列5</string>
     <string name="lottery_name_qxc">七星彩</string>
     <string name="desc_ssq">[每周二、四、日21:15开奖]</string>
+    <string name="desc_qlc">[每周一,三,五开奖]</string>
     <string name="desc_periodfrom">第</string>
     <string name="desc_period">期</string>
     <string name="desc_prize">开奖日期：</string>

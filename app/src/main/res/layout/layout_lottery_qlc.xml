@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/margin_border"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lottery_name_qlc"
+            android:textColor="@color/lottery_type_text"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/desc_qlc"
+            android:textColor="@color/lottery_type_desc"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line_phase"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/desc_periodfrom"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinner_period"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"></Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/desc_period"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line_phasedate"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/desc_prize"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_lotterydate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line_ball"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:visibility="visible">
+
+        <com.awu.powerlottery.view.ImageText
+            android:id="@+id/iv_b1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            custom:Src="@mipmap/red_ball"
+            android:textColor="#fff" />
+
+        <com.awu.powerlottery.view.ImageText
+            android:id="@+id/iv_b2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            custom:Src="@mipmap/red_ball"
+            android:textColor="#fff" />
+
+        <com.awu.powerlottery.view.ImageText
+            android:id="@+id/iv_b3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            custom:Src="@mipmap/red_ball"
+            android:textColor="#fff" />
+
+        <com.awu.powerlottery.view.ImageText
+            android:id="@+id/iv_b4"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            custom:Src="@mipmap/red_ball"
+            android:textColor="#fff" />
+
+        <com.awu.powerlottery.view.ImageText
+            android:id="@+id/iv_b5"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            custom:Src="@mipmap/red_ball"
+            android:textColor="#fff" />
+
+        <com.awu.powerlottery.view.ImageText
+            android:id="@+id/iv_b6"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            custom:Src="@mipmap/red_ball"
+            android:textColor="#fff" />
+
+        <com.awu.powerlottery.view.ImageText
+            android:id="@+id/iv_b7"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            custom:Src="@mipmap/red_ball"
+            android:textColor="#fff" />
+
+        <com.awu.powerlottery.view.ImageText
+            android:id="@+id/iv_b8"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            custom:Src="@mipmap/blue_ball"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gv_prize"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="7"
+        android:numColumns="4" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btn_random"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        style="@style/btn"/>
+</LinearLayout>

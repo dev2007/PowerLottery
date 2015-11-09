@@ -84,49 +84,56 @@
 
         <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
         <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
         <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
         <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
         <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b5"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
         <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b6"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             custom:Src="@mipmap/red_ball"
             android:textColor="#fff" />
 
         <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b7"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             custom:Src="@mipmap/blue_ball"
             android:textColor="#fff" />

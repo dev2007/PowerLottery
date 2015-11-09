@@ -5,7 +5,12 @@ package com.awu.powerlottery.util;
  */
 public enum LotteryType {
     SHUANGSEQIU("ssq",50),
-    FUCAI3D("fc3d",52);
+    FUCAI3D("fc3d",52),
+    QILECAI("qlc",51),
+    DALETOU("dlt",1),
+    QIXINGCAI("qxc",2),
+    PAILEI3("pl3",3),
+    PAILEI5("pl5",4);
 
     private String name;
     private int value;

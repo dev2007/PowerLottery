@@ -38,26 +38,39 @@ public class LotteryResult {
                 case FUCAI3D:
                     result = prize3DResult(data);
                     break;
+                case QILECAI:
+                    result = prizeResult(data);
+                    break;
+                default:
+                    break;
             }
 
             String date = prizeEndDate(data);
 
+            Log.i(TAG,"request phase:"+phase);
             Log.i(TAG,"request phase date:"+date);
+            Log.i(TAG,"request phase result:"+result);
 
+            int index = 1;
             for (Map<String,String> row : prizeList(data)){
+                Log.i(TAG,"LR 55:"+ index++);
                 PrizeResult prizeResult = new PrizeResult();
                 prizeResult.setPhase(Integer.parseInt(phase));
                 prizeResult.setResult(result);
                 prizeResult.setType(lotteryType.getName());
-                prizeResult.setTotal(Integer.parseInt(row.get("bet")));
-                prizeResult.setPrizemoney(Integer.parseInt(row.get("prize")));
+                String bet = row.get("bet");
+                prizeResult.setTotal(Integer.parseInt(bet.equals("") ? "0" : bet));
+                String prize = row.get("prize");
+                prizeResult.setPrizemoney(Integer.parseInt(prize.equals("") ? "0" : prize));
                 prizeResult.setDate(date);
                 list.add(prizeResult);
             }
+            Log.i(TAG,"LR 68");
             DataLayer.appendLotteryResult(lotteryType,phase,list);
             DBUtil.instance(PowerLotteryApplication.appContext()).savePrize(lotteryType,list);
 
         } catch (Exception e) {
+            Log.e(TAG,"LR:"+e.getMessage());
         }
     }
 
@@ -153,8 +166,10 @@ public class LotteryResult {
                 list.add(row);
             }
         }catch (Exception e){
+            Log.e(TAG,"LR 163:"+e.getMessage());
             return new ArrayList<Map<String,String>>();
         }
+        Log.i(TAG,"prize list ok");
         return list;
     }
 

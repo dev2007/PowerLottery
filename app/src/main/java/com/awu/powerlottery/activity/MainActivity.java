@@ -27,6 +27,7 @@ public class MainActivity extends BaseActivity {
 
     private DisplaySSQFragment displaySSQFragment;
     private Display3DFragment display3DFragment;
+    private DipslayQLCFragment displayQLCFragment;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView menuListView;
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity {
     private void initView(){
         displaySSQFragment = new DisplaySSQFragment();
         display3DFragment = new Display3DFragment();
+        displayQLCFragment = new DipslayQLCFragment();
 
         drawerLayout = (DrawerLayout)findViewById(R.id.layout_drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.mipmap.ic_list_white,R.string.drawer_in,R.string.drawer_out){
@@ -84,6 +86,7 @@ public class MainActivity extends BaseActivity {
                         ft.replace(R.id.fragment_container,display3DFragment);
                         break;
                     case R.string.lottery_name_qlc:
+                        ft.replace(R.id.fragment_container,displayQLCFragment);
                         break;
                     case R.string.lottery_name_dlt:
                         break;

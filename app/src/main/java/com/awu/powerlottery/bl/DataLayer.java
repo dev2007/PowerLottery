@@ -42,6 +42,8 @@ public class DataLayer {
 
     public static Map<String, List<PrizeResult>> FC3D_PrizeData = new HashMap<>();
 
+    public static Map<String, List<PrizeResult>> QLC_PrizeData = new HashMap<>();
+
     private static String selectedPhase = "";
 
     /**
@@ -57,9 +59,19 @@ public class DataLayer {
     static {
         LotteryPhaseDateList.put(LotteryType.SHUANGSEQIU, "SSQ_DATE");
         LotteryPhaseDateList.put(LotteryType.FUCAI3D, "FC3D_DATE");
+        LotteryPhaseDateList.put(LotteryType.QILECAI, "QLC_DATE");
+        LotteryPhaseDateList.put(LotteryType.DALETOU, "DLT_DATE");
+        LotteryPhaseDateList.put(LotteryType.QIXINGCAI, "QXC_DATE");
+        LotteryPhaseDateList.put(LotteryType.PAILEI3, "PL3_DATE");
+        LotteryPhaseDateList.put(LotteryType.PAILEI5, "PL5_DATE");
 
         LotteryPhaseList.put(LotteryType.SHUANGSEQIU, "SSQ_PHASE");
         LotteryPhaseList.put(LotteryType.FUCAI3D, "FC3D_PHASE");
+        LotteryPhaseList.put(LotteryType.QILECAI, "QLC_PHASE");
+        LotteryPhaseList.put(LotteryType.DALETOU, "DLT_PHASE");
+        LotteryPhaseList.put(LotteryType.QIXINGCAI, "QXC_PHASE");
+        LotteryPhaseList.put(LotteryType.PAILEI3, "PL3_PHASE");
+        LotteryPhaseList.put(LotteryType.PAILEI5, "PL5_PHASE");
     }
 
     /**
@@ -72,6 +84,7 @@ public class DataLayer {
         int phase = Integer.parseInt((String) newData.get(KEY_NEW_PHASE));
         String date = (String) newData.get(KEY_NEW_DATE);
 
+        Log.i(TAG, "store new phase:" + phase);
         setPhase(lotteryType, phase - 1);
         setPhaseDate(lotteryType, date);
     }
@@ -131,7 +144,7 @@ public class DataLayer {
     }
 
     public static void getLotteryResult(LotteryType lotteryType, String phase, QueryDataHandler queryDataHandler, BaseFragment fragment) {
-        Log.i(TAG,"Get Lottery Result:"+phase);
+        Log.i(TAG, "Get Lottery Result:" + phase);
         selectedPhase = phase;
         List<PrizeResult> list = DBUtil.instance(PowerLotteryApplication.appContext()).getPrize(lotteryType, phase);
         if (list.size() == 0) {
@@ -166,10 +179,16 @@ public class DataLayer {
     private static Map<String, List<PrizeResult>> switchTypeStore(LotteryType lotteryType) {
         switch (lotteryType) {
             case SHUANGSEQIU:
+                Log.i(TAG, "store ssq");
                 return SSQ_PrizeData;
             case FUCAI3D:
+                Log.i(TAG, "store 3d");
                 return FC3D_PrizeData;
+            case QILECAI:
+                Log.i(TAG, "store qlc");
+                return QLC_PrizeData;
             default:
+                Log.i(TAG, "store null");
                 return null;
         }
     }
@@ -186,6 +205,8 @@ public class DataLayer {
                 return getSSQPrize(selectedPhase);
             case FUCAI3D:
                 return get3DPrize(selectedPhase);
+            case QILECAI:
+                return getQLCPrize(selectedPhase);
             default:
                 break;
         }
@@ -217,7 +238,10 @@ public class DataLayer {
         prize[3] = "中奖条件";
         String[] prizeName = {"一等奖", "二等奖", "三等奖", "四等奖", "五等奖", "六等奖"};
         String[] prizeCondition = {"6+1", "6+0", "5+1", "5+0/4+1", "4+0/3+1", "2+1/1+1/0+1"};
+
+        Log.i(TAG,"DL 242 list size:"+list.size());
         for (PrizeResult map : list) {
+            Log.i(TAG,"DL index:" + index);
             prize[index] = prizeName[index / 4 - 1];
             prize[index + 1] = "" + map.getTotal();
             prize[index + 2] = "" + map.getPrizemoney();
@@ -256,6 +280,35 @@ public class DataLayer {
         return prize;
     }
 
+    private static String[] getQLCPrize(String phase) {
+        Log.i(TAG, "qlc prize phase:" + phase);
+        String[] prize = new String[36];
+
+        //had qlc data.
+        Map<String, List<PrizeResult>> prizeList = switchTypeStore(LotteryType.QILECAI);
+
+        if (!prizeList.containsKey(phase))
+            return new String[0];
+
+        List<PrizeResult> list = prizeList.get(phase);
+
+        int index = 4;
+        prize[0] = "奖项";
+        prize[1] = "中奖注数";
+        prize[2] = "单注奖金";
+        prize[3] = "中奖条件";
+        String[] prizeName = {"一等奖", "二等奖", "三等奖", "四等奖", "五等奖", "六等奖", "七等奖", "特等奖"};
+        String[] prizeCondition = {"7+0", "6+1", "6+0", "5+1", "5+0", "4+1", "4+0", "7+1"};
+        for (PrizeResult map : list) {
+            prize[index] = prizeName[index / 4 - 1];
+            prize[index + 1] = "" + map.getTotal();
+            prize[index + 2] = "" + map.getPrizemoney();
+            prize[index + 3] = prizeCondition[index / 4 - 1];
+            index += 4;
+        }
+        return prize;
+    }
+
     /**
      * get prize result.
      *
@@ -287,8 +340,10 @@ public class DataLayer {
         //had ssq data.
         Map<String, List<PrizeResult>> prizeList = switchTypeStore(lotteryType);
 
-        if (!prizeList.containsKey(selectedPhase))
+        if (!prizeList.containsKey(selectedPhase)) {
+            Log.i(TAG, "pull phase date null");
             return "";
+        }
 
         List<PrizeResult> list = prizeList.get(selectedPhase);
         Log.i(TAG, "phase date:" + list.get(0).getDate());
