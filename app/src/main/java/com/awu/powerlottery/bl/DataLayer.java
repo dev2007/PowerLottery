@@ -367,10 +367,10 @@ public class DataLayer {
 
     private static String[] getQXCPrize(String phase) {
         Log.i(TAG, "qxc prize phase:" + phase);
-        String[] prize = new String[36];
+        String[] prize = new String[28];
 
         //had qlc data.
-        Map<String, List<PrizeResult>> prizeList = switchTypeStore(LotteryType.QILECAI);
+        Map<String, List<PrizeResult>> prizeList = switchTypeStore(LotteryType.QIXINGCAI);
 
         if (!prizeList.containsKey(phase))
             return new String[0];
@@ -382,8 +382,8 @@ public class DataLayer {
         prize[1] = "中奖注数";
         prize[2] = "单注奖金";
         prize[3] = "中奖条件";
-        String[] prizeName = {"一等奖", "二等奖", "三等奖", "四等奖", "五等奖", "六等奖", "七等奖", "特等奖"};
-        String[] prizeCondition = {"7+0", "6+1", "6+0", "5+1", "5+0", "4+1", "4+0", "7+1"};
+        String[] prizeName = {"一等奖", "二等奖", "三等奖", "四等奖", "五等奖", "六等奖"};
+        String[] prizeCondition = {"定位中7码", "中连续6码", "中连续5码", "中连续4码", "中连续3码", "中连续2码", };
         for (PrizeResult map : list) {
             prize[index] = prizeName[index / 4 - 1];
             prize[index + 1] = "" + map.getTotal();
@@ -396,10 +396,10 @@ public class DataLayer {
 
     private static String[] getPL3Prize(String phase) {
         Log.i(TAG, "pl3 prize phase:" + phase);
-        String[] prize = new String[36];
+        String[] prize = new String[16];
 
         //had qlc data.
-        Map<String, List<PrizeResult>> prizeList = switchTypeStore(LotteryType.QILECAI);
+        Map<String, List<PrizeResult>> prizeList = switchTypeStore(LotteryType.PAILEI3);
 
         if (!prizeList.containsKey(phase))
             return new String[0];
@@ -411,8 +411,8 @@ public class DataLayer {
         prize[1] = "中奖注数";
         prize[2] = "单注奖金";
         prize[3] = "中奖条件";
-        String[] prizeName = {"一等奖", "二等奖", "三等奖", "四等奖", "五等奖", "六等奖", "七等奖", "特等奖"};
-        String[] prizeCondition = {"7+0", "6+1", "6+0", "5+1", "5+0", "4+1", "4+0", "7+1"};
+        String[] prizeName = {"直选", "组选3", "组选6"};
+        String[] prizeCondition = {"定位中三码", "不定位中三码", "不定位中三码"};
         for (PrizeResult map : list) {
             prize[index] = prizeName[index / 4 - 1];
             prize[index + 1] = "" + map.getTotal();
@@ -425,10 +425,10 @@ public class DataLayer {
 
     private static String[] getPL5Prize(String phase) {
         Log.i(TAG, "pl5 prize phase:" + phase);
-        String[] prize = new String[36];
+        String[] prize = new String[8];
 
         //had qlc data.
-        Map<String, List<PrizeResult>> prizeList = switchTypeStore(LotteryType.QILECAI);
+        Map<String, List<PrizeResult>> prizeList = switchTypeStore(LotteryType.PAILEI5);
 
         if (!prizeList.containsKey(phase))
             return new String[0];
@@ -440,8 +440,8 @@ public class DataLayer {
         prize[1] = "中奖注数";
         prize[2] = "单注奖金";
         prize[3] = "中奖条件";
-        String[] prizeName = {"一等奖", "二等奖", "三等奖", "四等奖", "五等奖", "六等奖", "七等奖", "特等奖"};
-        String[] prizeCondition = {"7+0", "6+1", "6+0", "5+1", "5+0", "4+1", "4+0", "7+1"};
+        String[] prizeName = {"一等奖"};
+        String[] prizeCondition = {"定位中五码"};
         for (PrizeResult map : list) {
             prize[index] = prizeName[index / 4 - 1];
             prize[index + 1] = "" + map.getTotal();

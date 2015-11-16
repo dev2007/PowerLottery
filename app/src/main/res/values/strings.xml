@@ -14,6 +14,8 @@
     <string name="desc_ssq">[每周二、四、日21:15开奖]</string>
     <string name="desc_qlc">[每周一,三,五开奖]</string>
     <string name="desc_dlt">[每周一、三、六20:30开奖]</string>
+    <string name="desc_pl3">[每日开奖]</string>
+    <string name="desc_qxc">[每周二,五,日开奖]</string>
     <string name="desc_periodfrom">第</string>
     <string name="desc_period">期</string>
     <string name="desc_prize">开奖日期：</string>

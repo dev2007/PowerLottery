@@ -29,12 +29,15 @@ public class MainActivity extends BaseActivity {
     private Display3DFragment display3DFragment;
     private DipslayQLCFragment displayQLCFragment;
     private DisplayDLTFragment displayDLTFragment;
+    private DisplayPL3Fragment displayPL3Fragment;
+    private DisplayPL5Fragment displayPL5Fragment;
+    private DisplayQXCFragment displayQXCFragment;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView menuListView;
     private SimpleAdapter listMenuAdapter;
-    private List<Map<String,Object>> menuData;
+    private List<Map<String, Object>> menuData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,19 +47,22 @@ public class MainActivity extends BaseActivity {
         initMenuList();
     }
 
-    private void initView(){
+    private void initView() {
         displaySSQFragment = new DisplaySSQFragment();
         display3DFragment = new Display3DFragment();
         displayQLCFragment = new DipslayQLCFragment();
         displayDLTFragment = new DisplayDLTFragment();
+        displayPL3Fragment = new DisplayPL3Fragment();
+        displayPL5Fragment = new DisplayPL5Fragment();
+        displayQXCFragment = new DisplayQXCFragment();
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.layout_drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.mipmap.ic_list_white,R.string.drawer_in,R.string.drawer_out){
-            public void onDrawerClosed(View view){
+        drawerLayout = (DrawerLayout) findViewById(R.id.layout_drawer);
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.mipmap.ic_list_white, R.string.drawer_in, R.string.drawer_out) {
+            public void onDrawerClosed(View view) {
                 getActionBar().setLogo(R.mipmap.ic_menu_white);
             }
 
-            public void onDrawerOpened(View drawerView){
+            public void onDrawerOpened(View drawerView) {
                 getActionBar().setLogo(R.mipmap.ic_arrow_back_white);
             }
         };
@@ -64,16 +70,16 @@ public class MainActivity extends BaseActivity {
         drawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setHomeButtonEnabled(true);
 
-        FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, displaySSQFragment);
         transaction.commit();
     }
 
-    private void initMenuList(){
-        menuListView = (ListView)findViewById(R.id.listview_menu);
+    private void initMenuList() {
+        menuListView = (ListView) findViewById(R.id.listview_menu);
         menuData = DataUtil.getMenuData();
-        listMenuAdapter = new SimpleAdapter(this,menuData,R.layout.lottery_menu_item,new String[]{"img","title"},
-                new int[]{R.id.imgview_menuimg,R.id.textview_menuname});
+        listMenuAdapter = new SimpleAdapter(this, menuData, R.layout.lottery_menu_item, new String[]{"img", "title"},
+                new int[]{R.id.imgview_menuimg, R.id.textview_menuname});
         menuListView.setAdapter(listMenuAdapter);
         menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,19 +92,22 @@ public class MainActivity extends BaseActivity {
                         ft.replace(R.id.fragment_container, displaySSQFragment);
                         break;
                     case R.string.lottery_name_3d:
-                        ft.replace(R.id.fragment_container,display3DFragment);
+                        ft.replace(R.id.fragment_container, display3DFragment);
                         break;
                     case R.string.lottery_name_qlc:
-                        ft.replace(R.id.fragment_container,displayQLCFragment);
+                        ft.replace(R.id.fragment_container, displayQLCFragment);
                         break;
                     case R.string.lottery_name_dlt:
-                        ft.replace(R.id.fragment_container,displayDLTFragment);
+                        ft.replace(R.id.fragment_container, displayDLTFragment);
                         break;
                     case R.string.lottery_name_pl3:
+                        ft.replace(R.id.fragment_container, displayPL3Fragment);
                         break;
                     case R.string.lottery_name_pl5:
+                        ft.replace(R.id.fragment_container, displayPL5Fragment);
                         break;
                     case R.string.lottery_name_qxc:
+                        ft.replace(R.id.fragment_container,displayQXCFragment);
                         break;
                     default:
                         break;
@@ -124,17 +133,16 @@ public class MainActivity extends BaseActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.action_exit:
                 exitAlert();
                 return true;
             case R.id.action_about:
                 break;
             case android.R.id.home:
-                if(!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                if (!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
                     drawerLayout.openDrawer(Gravity.LEFT);
-                }
-                else {
+                } else {
                     drawerLayout.closeDrawer(Gravity.LEFT);
                 }
                 return true;
@@ -148,7 +156,7 @@ public class MainActivity extends BaseActivity {
     /**
      * alert dialog for click exit menu item.
      */
-    private void exitAlert(){
+    private void exitAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle("提示")
                 .setMessage("确认要退出？")

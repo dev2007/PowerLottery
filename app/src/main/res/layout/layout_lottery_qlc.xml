@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <com.awu.powerlottery.view.ImageText
             android:id="@+id/iv_b1"

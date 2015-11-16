@@ -44,6 +44,11 @@ public class LotteryResult {
                 case DALETOU:
                     result = prizeDLTResult(data);
                     break;
+                case PAILEI3:
+                case PAILEI5:
+                case QIXINGCAI:
+                    result = prize3DResult(data);
+                    break;
                 default:
                     break;
             }
