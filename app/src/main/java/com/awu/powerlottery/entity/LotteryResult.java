@@ -41,6 +41,9 @@ public class LotteryResult {
                 case QILECAI:
                     result = prizeResult(data);
                     break;
+                case DALETOU:
+                    result = prizeDLTResult(data);
+                    break;
                 default:
                     break;
             }
@@ -135,6 +138,48 @@ public class LotteryResult {
             return resultStr;
         } catch (Exception e) {
             Log.i(TAG, "parse3d exception:" + e.getMessage());
+            return "";
+        }
+    }
+
+    private static String prizeDLTResult(JSONObject data) {
+        String resultStr = "";
+        try {
+            JSONObject result = data.getJSONObject("result");
+            JSONArray result2 = result.getJSONArray("result");
+            JSONObject obj = (JSONObject) result2.get(0);
+            String key = obj.getString("key");
+            JSONArray redData = null;
+            JSONArray blueData = null;
+            if (key.equals("red"))
+                redData = obj.getJSONArray("data");
+            else
+                blueData = obj.getJSONArray("data");
+
+            obj = (JSONObject) result2.get(1);
+            key = obj.getString("key");
+            if (key.equals("red"))
+                redData = obj.getJSONArray("data");
+            else
+                blueData = obj.getJSONArray("data");
+            if (redData != null) {
+                for (int i = 0; i < redData.length(); i++) {
+                    String num = (String) redData.get(i);
+                    resultStr += num + ",";
+                }
+            }
+            if (blueData != null) {
+                for (int i = 0; i < blueData.length(); i++) {
+                    String num = (String) blueData.get(i);
+                    resultStr += num + ",";
+                }
+            }
+
+            resultStr = resultStr.substring(0,resultStr.length() - 1);
+            Log.i(TAG, "parsedlt result:" + resultStr);
+            return resultStr;
+        } catch (Exception e) {
+            Log.i(TAG, "parsedlt exception:" + e.getMessage());
             return "";
         }
     }

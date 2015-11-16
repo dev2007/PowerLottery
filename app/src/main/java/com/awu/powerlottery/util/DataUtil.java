@@ -45,8 +45,14 @@ public class DataUtil {
 
         map = new HashMap<String,Object>();
         map.put("img",R.mipmap.pl);
-        map.put("title", getResourceStr(R.string.lottery_name_pl));
-        map.put("id",R.string.lottery_name_pl);
+        map.put("title", getResourceStr(R.string.lottery_name_pl3));
+        map.put("id",R.string.lottery_name_pl3);
+        menuData.add(map);
+
+        map = new HashMap<String,Object>();
+        map.put("img",R.mipmap.pl);
+        map.put("title", getResourceStr(R.string.lottery_name_pl5));
+        map.put("id",R.string.lottery_name_pl5);
         menuData.add(map);
 
         map = new HashMap<String,Object>();

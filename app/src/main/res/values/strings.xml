@@ -8,10 +8,12 @@
     <string name="lottery_name_3d">福彩3D</string>
     <string name="lottery_name_qlc">七乐彩</string>
     <string name="lottery_name_dlt">大乐透</string>
-    <string name="lottery_name_pl">排列3排列5</string>
+    <string name="lottery_name_pl3">排列3</string>
+    <string name="lottery_name_pl5">排列5</string>
     <string name="lottery_name_qxc">七星彩</string>
     <string name="desc_ssq">[每周二、四、日21:15开奖]</string>
     <string name="desc_qlc">[每周一,三,五开奖]</string>
+    <string name="desc_dlt">[每周一、三、六20:30开奖]</string>
     <string name="desc_periodfrom">第</string>
     <string name="desc_period">期</string>
     <string name="desc_prize">开奖日期：</string>
