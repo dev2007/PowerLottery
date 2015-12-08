@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awu.powerlottery.R;
@@ -29,11 +30,16 @@ public class PrizeGridArrayAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            View v = inflater.inflate(mResource, null);
-            convertView = v.findViewById(R.id.tv_txt);
+        LinearLayout cellView;
+
+        if(convertView == null){
+            cellView = new LinearLayout(getContext());
+            inflater.inflate(mResource, cellView,true);
+        }else{
+            cellView = (LinearLayout)convertView;
         }
-        TextView tv = ((TextView) convertView);
+
+        TextView tv = (TextView)cellView.findViewById(R.id.tv_txt);
         tv.setText(dataArray[position]);
 
         if(redLocation.length > 0){
@@ -43,6 +49,6 @@ public class PrizeGridArrayAdapter extends ArrayAdapter {
                     tv.setTextColor(Color.rgb(255, 0, 0));
             }
         }
-        return convertView;
+        return cellView;
     }
 }

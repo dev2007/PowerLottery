@@ -38,15 +38,21 @@ import java.text.SimpleDateFormat;
  * Created by awu on 2015-10-15.
  */
 public class DisplaySSQFragment extends BaseFragment {
+    /**
+     * Fragment TAG
+     */
     private static final String TAG = "DisplaySSQFragment";
-
-
-
-
+    /**
+     * View ball array.
+     */
     private ImageText[] ballList = new ImageText[7];
 
     private  int currentPosition;
 
+    /**
+     * Constructor.
+     * Bind resource with lottery type.
+     */
     public DisplaySSQFragment(){
         super();
         setLayout(R.layout.layout_lottery_ssq,LotteryType.SHUANGSEQIU);

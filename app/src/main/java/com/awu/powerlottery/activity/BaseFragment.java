@@ -36,6 +36,9 @@ import java.text.SimpleDateFormat;
  * Created by awu on 2015-10-23.
  */
 public abstract class BaseFragment extends Fragment implements IQueryLatestListener, IQueryDataListener {
+    /**
+     * Base Fragment TAG.
+     */
     private static final String TAG = "BaseFragment";
     protected CommonDialog dialogHelper;
     protected View contentView;
@@ -278,9 +281,10 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
         if (gridViewPrize != null) {
             gridViewPrize.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         }
-        if (buttonRandom != null) {
-            buttonRandom.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-        }
+        //TODO:下版增加功能后再放开。20151130 awu
+//        if (buttonRandom != null) {
+//            buttonRandom.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+//        }
     }
 
     /**
