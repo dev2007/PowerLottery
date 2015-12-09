@@ -30,6 +30,7 @@ import com.awu.powerlottery.util.PreferencesUtil;
 import com.awu.powerlottery.util.Utility;
 import com.awu.powerlottery.util.WebUtility;
 import com.awu.powerlottery.view.ImageText;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,6 +59,7 @@ public class DisplaySSQFragment extends BaseFragment {
         setLayout(R.layout.layout_lottery_ssq,LotteryType.SHUANGSEQIU);
     }
 
+
     @Override
     protected void onInit(Bundle savedInstanceState){
         ballList[0] = (ImageText)contentView.findViewById(R.id.iv_b1);
@@ -70,13 +72,10 @@ public class DisplaySSQFragment extends BaseFragment {
     }
 
 
-
-
-
     @Override
     protected void requestOthersOK(){
         super.requestOthersOK();
-        Log.i(TAG,"ssq requestothers ok");
+        Log.i(TAG, "ssq requestothers ok");
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -89,8 +88,4 @@ public class DisplaySSQFragment extends BaseFragment {
             }
         });
     }
-
-
-
-
 }

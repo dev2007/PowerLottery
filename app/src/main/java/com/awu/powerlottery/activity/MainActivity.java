@@ -14,10 +14,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.util.Log;
 
 import com.awu.powerlottery.R;
 import com.awu.powerlottery.app.ActivityCollector;
 import com.awu.powerlottery.util.DataUtil;
+import com.awu.powerlottery.util.DesUtil;
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.List;
 import java.util.Map;
@@ -45,6 +50,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         initView();
         initMenuList();
+        //umeng set appkey.
+        AnalyticsConfig.setAppkey(this, DesUtil.DeBase64(getString(R.string.umeng_key)));
+        UmengUpdateAgent.update(this);
+        MobclickAgent.updateOnlineConfig(this);
     }
 
     private void initView() {
@@ -107,7 +116,7 @@ public class MainActivity extends BaseActivity {
                         ft.replace(R.id.fragment_container, displayPL5Fragment);
                         break;
                     case R.string.lottery_name_qxc:
-                        ft.replace(R.id.fragment_container,displayQXCFragment);
+                        ft.replace(R.id.fragment_container, displayQXCFragment);
                         break;
                     default:
                         break;
@@ -173,5 +182,17 @@ public class MainActivity extends BaseActivity {
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

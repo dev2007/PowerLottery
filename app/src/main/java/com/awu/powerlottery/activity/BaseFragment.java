@@ -28,6 +28,7 @@ import com.awu.powerlottery.util.LotteryType;
 import com.awu.powerlottery.util.PreferencesUtil;
 import com.awu.powerlottery.util.Utility;
 import com.awu.powerlottery.util.WebUtility;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -170,8 +171,8 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
     private void requestOthers(int position){
         setOthersVisible(false);
         showProgressDialog(true);
-        Log.i(TAG,"Request data of phase:"+m_arr[position]);
-        DataLayer.getLotteryResult(lotteryType, m_arr[position], queryDataHandler,this);
+        Log.i(TAG, "Request data of phase:" + m_arr[position]);
+        DataLayer.getLotteryResult(lotteryType, m_arr[position], queryDataHandler, this);
     }
 
 
@@ -294,5 +295,19 @@ public abstract class BaseFragment extends Fragment implements IQueryLatestListe
      */
     public void showProgressDialog(boolean show){
         dialogHelper.showProgressDialog(show);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Umeng statistics functioin.
+        MobclickAgent.onPageStart(lotteryType.getName());
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        //Umeng statistics functioin.
+        MobclickAgent.onPageEnd(lotteryType.getName());
     }
 }

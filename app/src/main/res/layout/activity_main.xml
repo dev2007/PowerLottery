@@ -15,7 +15,7 @@
         android:id="@+id/listview_menu"
         android:layout_width="@dimen/listview_lottery_menu_width"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:background="#fff"
         android:choiceMode="singleChoice" />
 

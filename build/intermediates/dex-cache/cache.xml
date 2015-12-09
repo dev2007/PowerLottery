@@ -2,74 +2,11 @@
 <items version="2" >
 
     <item
-        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jar="D:\AwuProjects\GitHub\PowerLottery\app\libs\umeng-update-v2.6.0.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\release\support-annotations-23.0.1-9792d51791d92eddc0d9758885c1364396bdbf7e.jar" />
-    </item>
-    <item
-        jar="D:\AwuProjects\GitHub\PowerLottery\app\libs\gson-2.2.4.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="a60a5e993c98c864010053cb901b7eab25306568">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\release\gson-2.2.4-cd3a8fa7b4fc4d2daeff34c99f8acc41bd7c6a71.jar" />
-    </item>
-    <item
-        jar="D:\AwuProjects\GitHub\PowerLottery\app\libs\umeng-analytics-v5.6.3.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="8a8255ad63bcf5d7609e26b24d6cc38a3d961d40">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\debug\umeng-analytics-v5.6.3-86e4eebf651003aa6c83a02e8c503e31a3cf394a.jar" />
-    </item>
-    <item
-        jar="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\debug\classes-d26e7c3d868ea1a80fd1d619846893f38d63d59d.jar" />
-    </item>
-    <item
-        jar="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\release\classes-0989a77588cac59ae87e6882255040f2b1ad40a3.jar" />
-    </item>
-    <item
-        jar="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-01c0213c0a326d79b47720185c1788de8f3b1aa6.jar" />
-    </item>
-    <item
-        jar="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\release\classes-7af74370f5f74994908c73febe2929cc8859871d.jar" />
-    </item>
-    <item
-        jar="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\release\internal_impl-23.0.1-882cc84cf87929659913a8bf797fd38359ba8dce.jar" />
-    </item>
-    <item
-        jar="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\debug\classes-c5bcff5f784651199452983331b0ab6a859f881e.jar" />
-    </item>
-    <item
-        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
-        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-c820c2757b9c153a2fdd49f347072aa131e38fe7.jar" />
+        sha1="e76510af0986842b672c59d29502f3d29866320a">
+        <dex dex="D:\AwuProjects\GitHub\PowerLottery\app\build\intermediates\pre-dexed\debug\umeng-update-v2.6.0.1-4fa835316903d8b42ece4ba0e5f81a3b27b9c202.jar" />
     </item>
 
 </items>
