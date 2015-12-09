@@ -20,6 +20,7 @@ import com.awu.powerlottery.R;
 import com.awu.powerlottery.app.ActivityCollector;
 import com.awu.powerlottery.util.DataUtil;
 import com.awu.powerlottery.util.DesUtil;
+import com.awu.powerlottery.util.Utility;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -147,7 +148,17 @@ public class MainActivity extends BaseActivity {
                 exitAlert();
                 return true;
             case R.id.action_about:
-                break;
+                AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle(R.string.app_name)
+                        .setMessage(Utility.aboutMessage())
+                        .setPositiveButton(R.string.txt_ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        }).create();
+                dialog.show();
+            break;
             case android.R.id.home:
                 if (!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
                     drawerLayout.openDrawer(Gravity.LEFT);

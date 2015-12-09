@@ -1,5 +1,7 @@
 package com.awu.powerlottery.util;
 
+import com.awu.powerlottery.R;
+import com.awu.powerlottery.app.PowerLotteryApplication;
 import com.awu.powerlottery.entity.LotteryResult;
 
 import java.text.DateFormat;
@@ -10,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 /**
@@ -42,7 +47,26 @@ public class Utility {
         }
     }
 
+    public static String aboutMessage(){
+        return "当前版本：" + getVersion() + "\n祝君中奖";
+    }
 
+    /**
+     * get application version.
+     * @return
+     */
+    public static String getVersion() {
+        Context context = PowerLotteryApplication.appContext();
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            String version = info.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
 
 }

@@ -21,5 +21,6 @@
     <string name="desc_prize">开奖日期：</string>
     <string name="msg_query">最新数据获取中……</string>
     <string name="txt_prize">摇一注</string>
+    <string name="txt_ok">确定</string>
     <string name="umeng_key">NTY1ZTdjOWNlMGY1NWE4MzhhMDAxODkx</string>
 </resources>
