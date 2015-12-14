@@ -23,4 +23,6 @@
     <string name="txt_prize">摇一注</string>
     <string name="txt_ok">确定</string>
     <string name="umeng_key">NTY1ZTdjOWNlMGY1NWE4MzhhMDAxODkx</string>
+    <string name="tip_notify_title">最新开奖结果</string>
+    <string name="tip_notify_text">开奖了，点击查看</string>
 </resources>

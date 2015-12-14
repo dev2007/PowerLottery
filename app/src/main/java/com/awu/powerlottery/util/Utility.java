@@ -7,6 +7,7 @@ import com.awu.powerlottery.entity.LotteryResult;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +37,28 @@ public class Utility {
             java.util.Date dt2 = new Date();
             Log.i(TAG, "compareDate date1:" + dt1.getTime());
             Log.i(TAG, "compareDate date2:" + dt2.getTime());
+            if (dt1.getTime() > dt2.getTime()) {
+                return true;
+            }else{
+                return false;
+            }
+        }catch (Exception e){
+            Log.i(TAG, "compareDate ex:"+e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean compareCurrentDate(String date){
+        SimpleDateFormat  df = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            java.util.Date dt1 = df.parse(date);
+
+            Calendar calendar = Calendar.getInstance();
+            String dt2Str = String.format("%d-%d-%d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+            java.util.Date dt2 = df.parse(dt2Str);
+            Log.i(TAG, "compareDate date1:" + dt1.toString());
+            Log.i(TAG, "compareDate date2:" + dt2.toString());
             if (dt1.getTime() > dt2.getTime()) {
                 return true;
             }else{

@@ -105,7 +105,8 @@ public class DataLayer {
             Log.i(TAG, "P had phase");
             queryLatestHandler.sendEmptyMessage(QueryLatestHandler.MSG_OK);
         } else {
-            fragment.showProgressDialog(true);
+            if(fragment != null)
+                fragment.showProgressDialog(true);
             Log.i(TAG, "Request phase");
             WebUtility.queryNewLottery(lotteryType, queryLatestHandler);
         }

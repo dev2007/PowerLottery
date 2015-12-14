@@ -17,7 +17,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:logo="@mipmap/ic_menu_white">
+            android:logo="@mipmap/ic_menu_white"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +34,8 @@
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
+        <service android:name=".service.AutoNotifyService"/>
+        <receiver android:name=".receiver.AutoNotifyReceiver"/>
     </application>
 
 </manifest>

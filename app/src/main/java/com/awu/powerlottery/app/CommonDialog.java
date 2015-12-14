@@ -6,17 +6,26 @@ import android.content.Context;
 import com.awu.powerlottery.R;
 
 /**
+ * General ProgressDialog class for Lottery Fragment.
+ *
  * Created by awu on 2015-11-03.
  */
 public class CommonDialog {
     private ProgressDialog progressDialog = null;
     private Context mContext;
+    /**
+     * Constructor.
+     */
     public CommonDialog(Context context){
         this.mContext = context;
     }
 
-    public void showProgressDialog(boolean show) {
-        if (show) {
+    /**
+     * Show ProgressDialog or dismiss it.
+     * @param isShow True:display dialog. False: dismiss dialog if it's display.
+     */
+    public void show(boolean isShow) {
+        if (isShow) {
             if (progressDialog != null) {
                 if (!progressDialog.isShowing())
                     progressDialog.show();
