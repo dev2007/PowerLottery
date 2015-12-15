@@ -58,13 +58,6 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Intent intent = getIntent();
-        if(intent != null){
-            Log.e(TAG,"Get notification click" + currentLotteryType.getName());
-            currentLotteryType = LotteryType.valueOf(intent.getIntExtra(Definition.LotteryType,LotteryType.SHUANGSEQIU.getValue()));
-        }
-
         initView();
         initMenuList();
         initService();
@@ -103,6 +96,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void switchDisplay(){
+        Intent intent = getIntent();
+        if(intent != null){
+            Log.e(TAG,"Get notification click" + currentLotteryType.getName());
+            currentLotteryType = LotteryType.valueOf(intent.getIntExtra(Definition.LotteryType,LotteryType.SHUANGSEQIU.getValue()));
+        }
+
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         switch (currentLotteryType){
             case SHUANGSEQIU:
@@ -261,6 +260,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         MobclickAgent.onResume(this);
         switchDisplay();
+        Log.i(TAG,"MainActivity resume");
     }
 
     @Override

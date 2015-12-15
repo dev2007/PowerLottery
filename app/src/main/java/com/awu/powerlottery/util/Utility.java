@@ -48,14 +48,14 @@ public class Utility {
         }
     }
 
-    public static boolean compareCurrentDate(String date){
+    public static boolean afterCurrentDate(String date){
         SimpleDateFormat  df = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
             java.util.Date dt1 = df.parse(date);
 
             Calendar calendar = Calendar.getInstance();
-            String dt2Str = String.format("%d-%d-%d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+            String dt2Str = String.format("%d-%d-%d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
             java.util.Date dt2 = df.parse(dt2Str);
             Log.i(TAG, "compareDate date1:" + dt1.toString());
             Log.i(TAG, "compareDate date2:" + dt2.toString());
@@ -68,6 +68,15 @@ public class Utility {
             Log.i(TAG, "compareDate ex:"+e.getMessage());
             return false;
         }
+    }
+
+    public static int todayWeekDay(){
+        Calendar calendar = Calendar.getInstance();
+        int value = calendar.get(Calendar.DAY_OF_WEEK);
+        if(value == 1)
+            return 7;
+        else
+            return value - 1;
     }
 
     public static String aboutMessage(){
